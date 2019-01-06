@@ -31,13 +31,17 @@ def split_development_data(development_data):
     return [trainX, trainY, testX, testY]
 
 
-def transformation_of_features(data):
-    return data
+def transformation_of_dev_data(data):
+    return data[['LotArea', 'OverallQual', 'OverallCond', '1stFlrSF', '2ndFlrSF', 'GarageCars', 'ExterQual_TA', 'SalePrice']]
 
+
+def transformation_of_eval_data(data):
+    return data[['LotArea', 'OverallQual', 'OverallCond', '1stFlrSF', '2ndFlrSF', 'GarageCars', 'ExterQual_TA']]
 
 
 def label_categorical_features(data_set, column_names):
     return pd.get_dummies(data=data_set, prefix=column_names)
+
 
 # RMSE
 def root_mean_square_error(y_pred, y_true):
