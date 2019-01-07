@@ -88,9 +88,9 @@ class NeuralNet:
     def get_errors(self, X, y):
         return [self.calculate_RMSE(X, y), self.calculate_MAE(X, y)]
 
-    def predict(self, X, y):
+    def predict(self, X):
         [_X, _y] = self.get_input_placeholders()
-        return self.session.run(self.apply_net(_X), {_X:X})
+        return self.session.run(self.apply_net(_X), {_X: X})
 
     def get_input_placeholders(self):
         return [tf.placeholder(tf.float32, shape=[None, self.input_layer_dim]), tf.placeholder(tf.float32, shape=[None, self.output_layer_dim]) ]
