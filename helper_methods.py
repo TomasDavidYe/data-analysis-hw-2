@@ -25,18 +25,23 @@ def split_development_data(development_data):
     training_set = development_data.sample(frac=0.8)
     testing_set = development_data.drop(index=training_set.index)
     trainX = training_set.drop(columns=['SalePrice'])
-    trainY = training_set['SalePrice']
+    trainY = training_set.loc[:, ['SalePrice']]
     testX = testing_set.drop(columns=['SalePrice'])
-    testY = testing_set['SalePrice']
+    testY = testing_set.loc[:, ['SalePrice']]
     return [trainX, trainY, testX, testY]
 
 
 def transformation_of_dev_data(data):
-    return data[['LotArea', 'OverallQual', 'OverallCond', '1stFlrSF', '2ndFlrSF', 'GarageCars', 'ExterQual_TA', 'SalePrice']]
+    price_column = data[['SalePrice']]
+    features = data[['LotArea', 'OverallQual', 'OverallCond', '1stFlrSF', '2ndFlrSF', 'GarageCars', 'ExterQual_TA']]
+    normalized_features = (features - features.mean()) / features.std()
+    normalized_features['SalePrice'] = price_column
+    return normalized_features
 
 
 def transformation_of_eval_data(data):
-    return data[['LotArea', 'OverallQual', 'OverallCond', '1stFlrSF', '2ndFlrSF', 'GarageCars', 'ExterQual_TA']]
+    features = data[['LotArea', 'OverallQual', 'OverallCond', '1stFlrSF', '2ndFlrSF', 'GarageCars', 'ExterQual_TA']]
+    return (features - features.mean()) / features.std()
 
 
 def label_categorical_features(data_set, column_names):
